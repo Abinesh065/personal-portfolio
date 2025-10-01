@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  Abinesh A — Portfolio (Single-file)
+  Instructions:
+  - Replace img.jpg and project*.jpg with your images (same folder).
+  - Replace ABINESH.CV.pdf with your CV file name.
+  - Tweak CSS variables in :root for color/spacing.
+-->
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Abinesh A • Python Full-Stack Developer</title>
+  <meta name="description"
+    content="Abinesh A — Python Full-Stack Developer. Flask/Django, HTML/CSS, JS, SQL. Portfolio & projects." />
+  <link rel="icon" href="data:,"> <!-- replace with favicon if available -->
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========= Theme variables (change these to retheme) ========= */
+    :root {
+      --bg: #0b0b10;
+      --bg-2: #14121a;
+      --card: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      --primary: #7c5cff;
+      /* accent */
+      --primary-2: #5b3ce0;
+      --muted: #9aa0b4;
+      --text: #e8eef8;
+      --glass: rgba(255, 255, 255, 0.03);
+      --radius: 14px;
+      --max-width: 1200px;
+      --gap: 24px;
+      --transition: 280ms cubic-bezier(.2, .9, .3, 1);
+    }
+
+    /* Reset & base */
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124, 92, 255, 0.06), transparent),
+        radial-gradient(900px 500px at 90% 90%, rgba(91, 60, 224, 0.04), transparent),
+        var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.45;
+      padding-bottom: 80px;
+    }
+
+    a {
+      color: inherit
+    }
+
+    img {
+      display: block;
+      max-width: 100%
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header / Navbar */
+    header {
+      position: sticky;
+      top: 12px;
+      z-index: 1200;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border-radius: 12px;
+      margin: 12px;
+      box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.025);
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .brand .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, var(--primary), var(--primary-2));
+      box-shadow: 0 6px 20px rgba(91, 60, 224, 0.18);
+      color: white;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .brand h1 {
+      font-size: 1rem;
+      margin: 0;
+      line-height: 1
+    }
+
+    .brand p {
+      font-size: 0.78rem;
+      margin: 0;
+      color: var(--muted)
+    }
+
+    /* Nav links */
+    nav {
+      display: flex;
+      gap: 14px;
+      align-items: center
+    }
+
+    .nav-link {
+      padding: 8px 12px;
+      border-radius: 10px;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: all var(--transition);
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: -6px;
+      height: 3px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all var(--transition);
+    }
+
+    .nav-link:hover {
+      transform: translateY(-3px)
+    }
+
+    .nav-link:hover::after {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    /* Mobile menu button */
+    .hamburger {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+    }
+
+    .hamburger svg {
+      display: block
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: var(--gap);
+      align-items: center;
+      margin-top: 28px;
+      margin-inline: 12px;
+    }
+
+    .hero-card {
+      background: var(--card);
+      padding: 36px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      margin: 0 0 8px 0
+    }
+
+    .hero p.lead {
+      color: var(--muted);
+      margin: 0 0 18px;
+      font-size: 1.03rem
+    }
+
+    .ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: 0;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      color: white;
+      box-shadow: 0 8px 30px rgba(91, 60, 224, 0.14);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    .btn:hover {
+      transform: translateY(-4px)
+    }
+
+    /* Profile card (right) */
+    .profile {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.005));
+      padding: 22px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .avatar {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 6px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 12px 35px rgba(2, 6, 23, 0.6);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .profile h3 {
+      margin: 6px 0 0 0
+    }
+
+    .profile small {
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px
+    }
+
+    .socials {
+      display: flex;
+      gap: 10px
+    }
+
+    .socials a {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.02)
+    }
+
+    /* Sections layout */
+    main {
+      max-width: var(--max-width);
+      margin: 32px auto;
+      padding: 0 12px;
+      display: grid;
+      gap: 32px
+    }
+
+    section.card {
+      background: var(--card);
+      padding: 28px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      box-shadow: 0 6px 20px rgba(2, 6, 23, 0.45);
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+      align-items: center
+    }
+
+    .about-grid p {
+      color: var(--muted);
+      margin-bottom: 12px
+    }
+
+    /* Skills (animated bars) */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px
+    }
+
+    .skill {
+      background: transparent;
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .skill h4 {
+      margin: 0 0 8px 0;
+      font-size: 0.95rem
+    }
+
+    .bar {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar>i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      border-radius: 999px;
+      transition: width 900ms cubic-bezier(.2, .9, .3, 1);
+    }
+
+    .skill small {
+      color: var(--muted);
+      display: block;
+      margin-top: 8px
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .project {
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.012), transparent);
+      transition: transform var(--transition), box-shadow var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .project:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.6)
+    }
+
+    .project .thumb {
+      height: 160px;
+      overflow: hidden
+    }
+
+    .project .meta {
+      padding: 14px
+    }
+
+    .project h4 {
+      margin: 0 0 6px 0
+    }
+
+    .project p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem
+    }
+
+    /* Experience timeline */
+    .timeline {
+      position: relative;
+      padding-left: 18px
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--primary), var(--primary-2));
+      opacity: 0.13;
+    }
+
+    .entry {
+      position: relative;
+      padding: 12px 12px 18px;
+      margin-bottom: 6px
+    }
+
+    .entry::before {
+      content: "";
+      position: absolute;
+      left: -4px;
+      top: 18px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      box-shadow: 0 6px 20px rgba(91, 60, 224, 0.12)
+    }
+
+    .entry h4 {
+      margin: 0 0 4px
+    }
+
+    .entry .date {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 6px
+    }
+
+    .entry p {
+      margin: 0;
+      color: var(--muted)
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
+      align-items: start
+    }
+
+    .contact-card {
+      padding: 18px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.01)
+    }
+
+    .contact-card a {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, rgba(124, 92, 255, 0.14), rgba(91, 60, 224, 0.08));
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 8px
+    }
+
+    /* Responsive adjustments */
+    @media (max-width:1060px) {
+      .hero {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr
+      }
+
+      nav {
+        display: none
+      }
+
+      .hamburger {
+        display: flex
+      }
+    }
+
+    @media (max-width:640px) {
+      .skills-grid {
+        grid-template-columns: 1fr
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr
+      }
+
+      header {
+        padding: 8px;
+        margin: 8px
+      }
+
+      .hero-card {
+        padding: 20px
+      }
+    }
+
+    /* Reduced motion user preference */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important
+      }
+    }
+
+    /* Utility: hidden for mobile menu */
+    .mobile-nav {
+      position: fixed;
+      right: 12px;
+      top: 70px;
+      background: var(--bg-2);
+      padding: 12px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .mobile-nav a {
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 700
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="container" role="banner" aria-label="Main header">
+    <div class="brand" aria-hidden="false">
+      <div class="logo">AA</div>
+      <div>
+        <h1 style="font-size:0.95rem;margin-bottom:2px">Abinesh A</h1>
+        <p style="font-size:0.78rem;color:var(--muted)">Python • Full-Stack • Data</p>
+      </div>
+    </div>
+
+    <nav role="navigation" aria-label="Primary navigation">
+      <a class="nav-link" href="#home">Home</a>
+      <a class="nav-link" href="#about">About</a>
+      <a class="nav-link" href="#skills">Skills</a>
+      <a class="nav-link" href="#projects">Projects</a>
+      <a class="nav-link" href="#experience">Experience</a>
+      <a class="nav-link" href="#contact">Contact</a>
+    </nav>
+
+    <button class="hamburger" id="hambtn" aria-label="Open menu" title="Menu">
+      <!-- simple hamburger -->
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="20" height="2" rx="1" fill="white"></rect>
+        <rect y="6" width="20" height="2" rx="1" fill="white" opacity="0.85"></rect>
+        <rect y="12" width="20" height="2" rx="1" fill="white" opacity="0.7"></rect>
+      </svg>
+    </button>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section id="home" class="hero container" aria-labelledby="hero-heading">
+      <div class="hero-card">
+        <h2 id="hero-heading">Hi, I’m <span
+            style="background:linear-gradient(90deg,var(--primary),var(--primary-2));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800">Abinesh</span>
+          — Python Full-Stack Developer</h2>
+        <p class="lead">I build clean, performant, and user-friendly web apps with Python (Flask/Django), modern
+          frontend, and SQL-backed databases.</p>
+
+        <div class="ctas" role="group" aria-label="Actions">
+          <a class="btn btn-primary" href="#contact" aria-label="Contact me">Contact Me
+            <svg width="16" height="16" viewBox="0 0 24 24" style="margin-left:4px" fill="none"
+              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8" stroke="white" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M21 8v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8" stroke="white" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </a>
+
+          <a class="btn btn-secondary" href="ABINESH.CV[1].pdf" target="_blank" rel="noopener"
+            aria-label="Download CV">Download CV</a>
+        </div>
+
+        <div style="margin-top:18px;color:var(--muted);font-size:0.95rem">
+          <strong>Currently:</strong> Python Full-Stack Developer Intern — building APIs & dashboards.
+        </div>
+      </div>
+
+      <aside class="profile" aria-label="Profile card">
+        <div class="avatar" aria-hidden="true">
+          <!-- replace img.jpg with your profile image -->
+          <img src="img.jpg" alt="Abinesh profile photo">
+        </div>
+
+        <div>
+          <h3>Abinesh A</h3>
+          <small>Python • Flask/Django • SQL • JS</small>
+        </div>
+
+        <div class="socials" role="list">
+          <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub (opens in new tab)">
+            <!-- GitHub SVG -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true">
+              <path
+                d="M12 .5C5.7.5.9 5.3.9 11.6c0 4.6 3 8.5 7.1 9.9.5.1.7-.2.7-.5v-1.8c-2.9.6-3.5-1.2-3.5-1.2-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1 1.6.6 2 1 .1-.8.4-1.4.7-1.8-2.3-.3-4.7-1.1-4.7-5 0-1.1.4-2 1.1-2.8-.1-.3-.4-1.3.1-2.6 0 0 .9-.3 2.9 1.1a9.7 9.7 0 015.3 0c2-1.4 2.9-1.1 2.9-1.1.5 1.3.2 2.3.1 2.6.7.8 1.1 1.7 1.1 2.8 0 3.9-2.4 4.6-4.7 5 .4.4.8 1.1.8 2.2v3.3c0 .3.2.6.7.5 4.1-1.4 7.1-5.3 7.1-9.9C23.1 5.3 18.3.5 12 .5z" />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/abinesh01" target="_blank" rel="noopener"
+            aria-label="LinkedIn (opens in new tab)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true">
+              <path
+                d="M4.98 3.5a2.4 2.4 0 11-.002 4.8A2.4 2.4 0 014.98 3.5zM3.74 9h2.48V21H3.74zM9.7 9h2.38v1.7h.03c.33-.63 1.14-1.3 2.35-1.3 2.51 0 2.97 1.65 2.97 3.79V21h-2.48v-5.02c0-1.2-.02-2.75-1.67-2.75-1.68 0-1.94 1.32-1.94 2.67V21H9.7z" />
+            </svg>
+          </a>
+          <a href="mailto:abinesh6656@gmail.com" aria-label="Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true">
+              <path
+                d="M2 6.5v11A2.5 2.5 0 004.5 20h15A2.5 2.5 0 0022 17.5v-11A2.5 2.5 0 0019.5 4h-15A2.5 2.5 0 002 6.5zm2.3-.1L12 12.2l7.7-5.8" />
+            </svg>
+          </a>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="card" aria-labelledby="about-heading">
+      <div class="container" style="padding:0">
+        <h2 id="about-heading" style="margin-bottom:16px">About</h2>
+        <div class="about-grid">
+          <div>
+            <p>Hello — I’m <strong>Abinesh</strong>, an engineering graduate and a sincere Python Full-Stack Developer.
+              I like building solutions that are practical, maintainable, and user-friendly. I work mainly with Flask /
+              Django and vanilla JS, and I enjoy learning new tools and techniques.</p>
+            <p>I’ve completed internships in data science and full-stack development, worked with SQL databases, and
+              practiced clean code, testing, and version control (Git).</p>
+            <p style="color:var(--muted)">I’m currently looking for challenging opportunities where I can contribute,
+              learn, and grow.</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+            <div style="width:100%;padding:14px;border-radius:12px;background:rgba(255,255,255,0.01);text-align:center">
+              <strong>Quick facts</strong>
+              <div style="margin-top:6px;color:var(--muted)">Engineering Graduate • Python • Available for hire</div>
+            </div>
+            <div style="width:100%;display:flex;gap:8px">
+              <a class="btn btn-primary" style="flex:1;text-align:center" href="ABINESH.CV[1].pdf" target="_blank"
+                rel="noopener">View CV</a>
+              <a class="btn btn-secondary" style="flex:1;text-align:center" href="#contact">Get in touch</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <div style="width:100%;padding:14px;border-radius:12px;background:rgba(255,255,255,0.01);text-align:center">
+      <strong>Education</strong>
+      <div style="margin-top:6px;color:var(--muted)">
+        B.E. Computer Science — Ponjesly College of Engineering, 2025
+      </div>
+    </div>
+
+
+
+    <!-- SKILLS -->
+    <section id="skills" class="card" aria-labelledby="skills-heading">
+      <div class="container" style="padding:0">
+        <h2 id="skills-heading" style="margin-bottom:18px">Skills</h2>
+
+        <div class="skills-grid" aria-hidden="false">
+          <div class="skill" data-percent="95">
+            <h4>Python</h4>
+            <div class="bar"><i style="width:0%"></i></div>
+            <small>Flask / Django, scripting, libraries: Pandas, NumPy</small>
+          </div>
+
+          <div class="skill" data-percent="85">
+            <h4>HTML & CSS</h4>
+            <div class="bar"><i style="width:0%"></i></div>
+            <small>Responsive layouts, CSS Grid & Flexbox</small>
+          </div>
+
+          <div class="skill" data-percent="75">
+            <h4>JavaScript</h4>
+            <div class="bar"><i style="width:0%"></i></div>
+            <small>DOM, fetch, vanilla JS & small libs</small>
+          </div>
+
+          <div class="skill" data-percent="70">
+            <h4>Django</h4>
+            <div class="bar"><i style="width:0%"></i></div>
+            <small>Models, views, templates, admin</small>
+          </div>
+
+          <div class="skill" data-percent="65">
+            <h4>SQL</h4>
+            <div class="bar"><i style="width:0%"></i></div>
+            <small>CRUD, relationships, basic optimizations</small>
+          </div>
+
+          <div class="skill" data-percent="60">
+            <h4>Git & Dev tools</h4>
+            <div class="bar"><i style="width:0%"></i></div>
+            <small>Version control & collaboration</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="card" aria-labelledby="projects-heading">
+      <div class="container" style="padding:0">
+        <h2 id="projects-heading" style="margin-bottom:18px">Projects</h2>
+
+        <div class="projects-grid">
+          <article class="project" role="article" aria-labelledby="p1">
+            <div class="thumb"><img src="project1.jpg" alt="Project one screenshot"></div>
+            <div class="meta">
+              <h4 id="p1">Task Manager (Flask)</h4>
+              <p>CRUD app with user auth, REST endpoints and responsive UI.</p>
+            </div>
+          </article>
+
+          <article class="project" role="article" aria-labelledby="p2">
+            <div class="thumb"><img src="project2.jpg" alt="Project two screenshot"></div>
+            <div class="meta">
+              <h4 id="p2">Portfolio Website</h4>
+              <p>Responsive personal site built with HTML, CSS & JS.</p>
+            </div>
+          </article>
+
+          <article class="project" role="article" aria-labelledby="p3">
+            <div class="thumb"><img src="project3.jpg" alt="Project three screenshot"></div>
+            <div class="meta">
+              <h4 id="p3">Library Manager (Django)</h4>
+              <p>Admin panel, secure CRUD, search & SQL backend.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="card" aria-labelledby="exp-heading">
+      <div class="container" style="padding:0">
+        <h2 id="exp-heading" style="margin-bottom:18px">Experience</h2>
+        <div class="timeline">
+          <div class="entry">
+            <h4>Python Fullstack Developer Intern — Mashup stack </h4>
+            <div class="date">2025 — Present</div>
+            <p>Gained hands-on experience in full-stack development using Python, covering backend, database, and
+              frontend integration.Designed and implemented CRUD operations with SQL databases for data storage and
+              management.</p><br>
+
+            <p>Practiced best coding standards, modular design, debugging, version control (Git), and clean
+              documentation.</p>
+          </div>
+
+          <div class="entry">
+            <h4>Data Science Intern — Srishti Innovative</h4>
+            <div class="date">Jan 2024 — Feb 2024</div>
+            <p>Practiced best coding standards, modular design, debugging, version control (Git), and clean
+              documentation.
+              Learned programming fundamentals in Python for data science, including libraries such as Pandas, NumPy,
+              and Matplotlib.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="card" aria-labelledby="contact-heading">
+      <div class="container" style="padding:0">
+        <h2 id="contact-heading" style="margin-bottom:16px">Contact</h2>
+        <div class="contact-grid">
+          <div>
+            <p style="color:var(--muted)">Have a project or opportunity? I’d love to hear about it. I reply quickly to
+              serious messages.</p>
+
+            <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+              <a class="contact-card" href="mailto:abinesh6656@gmail.com" style="text-decoration:none">
+                <div class="contact-card"
+                  style="display:inline-block;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg, rgba(124,92,255,0.12), rgba(91,60,224,0.06));color:var(--text)">
+                  Email me
+                </div>
+              </a>
+
+              <a class="contact-card" href="https://www.linkedin.com/in/abinesh01" target="_blank" rel="noopener"
+                style="text-decoration:none">
+                <div class="contact-card"
+                  style="display:inline-block;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.01);color:var(--text)">
+                  LinkedIn
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <aside style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+            <div style="font-weight:700">Email</div>
+            <div style="color:var(--muted);">abinesh6656@gmail.com</div>
+
+            <div style="margin-top:12px;font-weight:700">Resume</div>
+            <div style="color:var(--muted);"><a href="ABINESH.CV[1].pdf" target="_blank" rel="noopener">Open CV
+                (PDF)</a></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <footer style="margin-top:8px" aria-hidden="false">
+      <div class="container" style="padding:0;text-align:center;color:var(--muted);font-size:0.95rem">
+        © <span id="year"></span> Abinesh A — Built with care.
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Mobile nav placeholder -->
+  <div id="mobileNav" class="mobile-nav" style="display:none" aria-hidden="true">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- JS: interactions & animations -->
+  <script>
+    // Set year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const hambtn = document.getElementById('hambtn');
+    const mobileNav = document.getElementById('mobileNav');
+    let mobileOpen = false;
+    hambtn.addEventListener('click', () => {
+      mobileOpen = !mobileOpen;
+      mobileNav.style.display = mobileOpen ? 'flex' : 'none';
+      mobileNav.setAttribute('aria-hidden', !mobileOpen);
+      hambtn.setAttribute('aria-expanded', mobileOpen);
+    });
+
+    // Animate skill bars when visible
+    const skills = document.querySelectorAll('.skill');
+    const skillObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target.querySelector('i');
+          const percent = entry.target.getAttribute('data-percent') || 80;
+          el.style.width = percent + '%';
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    skills.forEach(s => skillObserver.observe(s));
+
+    // Reveal animations for entries & projects
+    const revealItems = document.querySelectorAll('.entry, .project, .profile, .hero-card');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('visible');
+          en.target.style.opacity = 1;
+          en.target.style.transform = 'translateY(0)';
+        } else {
+          // optional: keep visible once seen (comment out to keep)
+        }
+      });
+    }, { threshold: 0.16 });
+
+    revealItems.forEach(i => {
+      // initial state
+      i.style.opacity = 0;
+      i.style.transform = 'translateY(18px)';
+      i.style.transition = 'all 520ms cubic-bezier(.2,.9,.25,1)';
+      revealObserver.observe(i);
+    });
+
+    // Smooth-scrolling focus for keyboard accessibility
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href');
+        if (href.length > 1) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.setAttribute('tabindex', '-1');
+            target.focus({ preventScroll: true });
+            window.setTimeout(() => target.removeAttribute('tabindex'), 1200);
+            // close mobile nav
+            if (mobileOpen) { mobileNav.style.display = 'none'; mobileOpen = false; hambtn.setAttribute('aria-expanded', false); }
+          }
+        }
+      });
+    });
+
+    // Accessibility: close mobile nav with Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileOpen) {
+        mobileNav.style.display = 'none'; mobileOpen = false; hambtn.setAttribute('aria-expanded', false);
+      }
+    });
+  </script>
+</body>
+
+</html>
