@@ -960,29 +960,54 @@
 
 
 
+  // --- CONFIG ---
+  const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz7N0CPxqf1QtDZavgpxuTz9vqp6pWWOpeMZtseByLmkNsjcgn9hZUDE1NU_1rAyzu8Gw/exec"; // Replace with your Web App URL
+  const SECRET = "kT8v9bP2xZqLm3"; // Same secret as in Apps Script
 
+  // --- TRACK VISIT COUNT ---
+  let visitCount = parseInt(localStorage.getItem('visitCount') || 0) + 1;
+  localStorage.setItem('visitCount', visitCount);
 
-    const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz7N0CPxqf1QtDZavgpxuTz9vqp6pWWOpeMZtseByLmkNsjcgn9hZUDE1NU_1rAyzu8Gw/exec"; // replace with your Web App URL
-    const SECRET = "kT8v9bP2xZqLm3"; // same key as in Apps Script
-
-    // Track visit count per browser
-    let visitCount = parseInt(localStorage.getItem('visitCount') || 0) + 1;
-    localStorage.setItem('visitCount', visitCount);
-
-    // Get visitor name
-    let visitorName = prompt("Enter your name:") || "Anonymous";
+  // --- GET VISITOR NAME ---
+  let visitorName = localStorage.getItem('visitorName');
+  if (!visitorName) {
+    visitorName = prompt("Enter your name:") || "Anonymous";
     localStorage.setItem('visitorName', visitorName);
+  }
 
-
-    // Send data to Google Sheet
+  // --- SEND DATA TO SHEET ---
+  function sendToSheet() {
     fetch(SHEET_WEBAPP_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: visitorName, count: visitCount, secret: SECRET })
+      body: JSON.stringify({ 
+        name: visitorName, 
+        count: visitCount, 
+        secret: SECRET 
+      })
     })
-      .then(response => response.json())
-      .then(data => console.log("Sheet response:", data))
-      .catch(error => console.error("Error sending data:", error));
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        console.log("Visitor saved to Sheet:", visitorName, visitCount);
+      } else {
+        console.error("Sheet error:", data.message);
+      }
+    })
+    .catch(err => console.error("Fetch error:", err));
+  }
+
+  // Only send if running on a live URL
+  if (location.protocol === "https:" || location.hostname !== "localhost") {
+    sendToSheet();
+  } else {
+    console.log("Visitor tracking disabled on localhost due to CORS.");
+  }
+</script>
+
+
+
+    
   </script>
 
 
