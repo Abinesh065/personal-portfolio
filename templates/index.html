@@ -957,6 +957,29 @@
         mobileNav.style.display = 'none'; mobileOpen = false; hambtn.setAttribute('aria-expanded', false);
       }
     });
+
+
+
+
+    // Track visit count
+    let visitCount = parseInt(localStorage.getItem('visitCount') || 0);
+    visitCount++;
+    localStorage.setItem('visitCount', visitCount);
+
+    // Get visitor name
+    let visitorName = localStorage.getItem('visitorName');
+    if (!visitorName) {
+      visitorName = prompt("Enter your name:");
+      localStorage.setItem('visitorName', visitorName);
+    }
+
+    // Send data to backend
+    fetch('/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: visitorName, count: visitCount })
+    });
+
   </script>
 </body>
 
