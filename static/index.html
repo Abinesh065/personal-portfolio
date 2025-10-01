@@ -961,24 +961,30 @@
 
 
 
-    // Track visit count
-    let visitCount = parseInt(localStorage.getItem('visitCount') || 0);
-    visitCount++;
+
+    const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz7N0CPxqf1QtDZavgpxuTz9vqp6pWWOpeMZtseByLmkNsjcgn9hZUDE1NU_1rAyzu8Gw/exec"; // replace with your Web App URL
+    const SECRET = "kT8v9bP2xZqLm3"; // same key as in Apps Script
+
+    // Track visit count per browser
+    let visitCount = parseInt(localStorage.getItem('visitCount') || 0) + 1;
     localStorage.setItem('visitCount', visitCount);
 
     // Get visitor name
-    let visitorName = localStorage.getItem('visitorName');
-    if (!visitorName) {
-      visitorName = prompt("Enter your name:");
-      localStorage.setItem('visitorName', visitorName);
-    }
+    let visitorName = prompt("Enter your name:") || "Anonymous";
+    localStorage.setItem('visitorName', visitorName);
 
-    // Send data to backend
-    fetch('/save', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: visitorName, count: visitCount })
-    });
+
+    // Send data to Google Sheet
+    fetch(SHEET_WEBAPP_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: visitorName, count: visitCount, secret: SECRET })
+    })
+      .then(response => response.json())
+      .then(data => console.log("Sheet response:", data))
+      .catch(error => console.error("Error sending data:", error));
+  </script>
+
 
   </script>
 </body>
