@@ -959,47 +959,43 @@
     });
 
 
-// Google Sheet Web App URL
-const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwAp1VW_REA7JMIh59cpvEESWqnEwMZuGjrML24AnkbU2NWcn0SLrUi2a7ipFbzE2MGIQ/exec";
 
-// Secret key (must match your Apps Script)
-const SECRET = "kT8v9bP2xZqLm3";
+  // --- Configuration ---
+  const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwAp1VW_REA7JMIh59cpvEESWqnEwMZuGjrML24AnkbU2NWcn0SLrUi2a7ipFbzE2MGIQ/exec";
+  const SECRET = "kT8v9bP2xZqLm3"; // must match your Apps Script secret
 
-// Track visit count per browser
-let visitCount = parseInt(localStorage.getItem('visitCount') || 0) + 1;
-localStorage.setItem('visitCount', visitCount);
+  // --- Track visit count ---
+  let visitCount = parseInt(localStorage.getItem('visitCount') || 0) + 1;
+  localStorage.setItem('visitCount', visitCount);
 
-// Get visitor name (prompt once per browser)
-let visitorName = localStorage.getItem('visitorName');
-if(!visitorName) {
-  visitorName = prompt("Enter your name:") || "Anonymous";
-  localStorage.setItem('visitorName', visitorName);
-}
+  // --- Ask visitor for name (only once) ---
+  let visitorName = localStorage.getItem('visitorName');
+  if (!visitorName) {
+    visitorName = prompt("Enter your name:") || "Anonymous";
+    localStorage.setItem('visitorName', visitorName);
+  }
 
-// Send data to Google Sheet
-function sendToSheet() {
-  fetch(SHEET_WEBAPP_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: visitorName,
-      count: visitCount,
-      secret: SECRET
-    })
-  })
-  .then(response => response.json())
-  .then(data => console.log("Sheet response:", data))
-  .catch(error => console.error("Error sending data:", error));
-}
+  // --- JSONP callback function ---
+  function sheetCallback(response) {
+    console.log("Google Sheet response:", response);
+  }
 
-// Execute immediately
-sendToSheet();
+  // --- Send data via JSONP ---
+  const script = document.createElement('script');
+  script.src = SHEET_WEBAPP_URL
+             + `?name=${encodeURIComponent(visitorName)}`
+             + `&count=${visitCount}`
+             + `&secret=${SECRET}`
+             + `&callback=sheetCallback`;
+  document.body.appendChild(script);
+
+
 
 
 
 
     
-  </script>
+
 
 
   </script>
