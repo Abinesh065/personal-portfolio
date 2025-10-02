@@ -866,9 +866,6 @@
       <div class="container" style="padding:0;text-align:center;color:var(--muted);font-size:0.95rem">
         © <span id="year"></span> Abinesh A — Built with care.
       </div>
-      <br>
-      Visitors: <span id="visitorCount">0</span>
-      </div>
     </footer>
 
   </main>
@@ -965,16 +962,6 @@
 
 
 
-    // Visitor counter
-    const counterNamespace = 'abinesh-portfolio';
-    const counterKey = 'visitors';
-
-    fetch(`https://api.countapi.xyz/hit/${counterNamespace}/${counterKey}`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('visitorCount').textContent = data.value;
-      })
-      .catch(err => console.error('Visitor counter error:', err));
   </script>
 
 </body>
