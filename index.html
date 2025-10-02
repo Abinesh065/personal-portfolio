@@ -866,6 +866,9 @@
       <div class="container" style="padding:0;text-align:center;color:var(--muted);font-size:0.95rem">
         © <span id="year"></span> Abinesh A — Built with care.
       </div>
+      <br>
+      Visitors: <span id="visitorCount">0</span>
+      </div>
     </footer>
 
   </main>
@@ -884,6 +887,7 @@
   <script>
     // Set year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
+
 
     // Mobile nav toggle
     const hambtn = document.getElementById('hambtn');
@@ -959,43 +963,14 @@
     });
 
 
+    // Set year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-  // --- Configuration ---
-  const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwAp1VW_REA7JMIh59cpvEESWqnEwMZuGjrML24AnkbU2NWcn0SLrUi2a7ipFbzE2MGIQ/exec";
-  const SECRET = "kT8v9bP2xZqLm3"; // must match your Apps Script secret
-
-  // --- Track visit count ---
-  let visitCount = parseInt(localStorage.getItem('visitCount') || 0) + 1;
-  localStorage.setItem('visitCount', visitCount);
-
-  // --- Ask visitor for name (only once) ---
-  let visitorName = localStorage.getItem('visitorName');
-  if (!visitorName) {
-    visitorName = prompt("Enter your name:") || "Anonymous";
-    localStorage.setItem('visitorName', visitorName);
-  }
-
-  // --- JSONP callback function ---
-  function sheetCallback(response) {
-    console.log("Google Sheet response:", response);
-  }
-
-  // --- Send data via JSONP ---
-  const script = document.createElement('script');
-  script.src = SHEET_WEBAPP_URL
-             + `?name=${encodeURIComponent(visitorName)}`
-             + `&count=${visitCount}`
-             + `&secret=${SECRET}`
-             + `&callback=sheetCallback`;
-  document.body.appendChild(script);
-
-
-
-
-
-
-    
-
+    // Simple visitor counter using localStorage
+    let count = localStorage.getItem('visitorCount') || 0;
+    count = parseInt(count) + 1;
+    localStorage.setItem('visitorCount', count);
+    document.getElementById('visitorCount').textContent = count;
 
 
   </script>
